@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Server", "No
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Common", "NoteChatRecode-Common\NoteChatRecode-Common.csproj", "{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Client", "NoteChatRecode-Client\NoteChatRecode-Client.csproj", "{DCABE3BC-2970-403B-8FCB-A6497A122F61}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Client-WinForm", "NoteChatRecode-Client-WinForm\NoteChatRecode-Client-WinForm.csproj", "{40A5890D-A5B6-4D99-B95A-7D714A1B408E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{7668A686-09D3-4332-92FC-9AC294B2ACF4}"
@@ -17,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Client-Common", "NoteChatRecode-Client-Common\NoteChatRecode-Client-Common.csproj", "{0CA4DD5E-F884-4AD6-9816-987B346113F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Client", "NoteChatRecode-Client\NoteChatRecode-Client.csproj", "{5FF53F49-4D3B-49E1-B81E-30947CC78243}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,12 +32,6 @@ Global
 		{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Debug|Any CPU.Build.0 = Debug|x64
-		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Debug|Any CPU.Deploy.0 = Debug|x64
-		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Release|Any CPU.ActiveCfg = Release|x64
-		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Release|Any CPU.Build.0 = Release|x64
-		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Release|Any CPU.Deploy.0 = Release|x64
 		{40A5890D-A5B6-4D99-B95A-7D714A1B408E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40A5890D-A5B6-4D99-B95A-7D714A1B408E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40A5890D-A5B6-4D99-B95A-7D714A1B408E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,6 +40,10 @@ Global
 		{0CA4DD5E-F884-4AD6-9816-987B346113F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CA4DD5E-F884-4AD6-9816-987B346113F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CA4DD5E-F884-4AD6-9816-987B346113F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FF53F49-4D3B-49E1-B81E-30947CC78243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FF53F49-4D3B-49E1-B81E-30947CC78243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FF53F49-4D3B-49E1-B81E-30947CC78243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FF53F49-4D3B-49E1-B81E-30947CC78243}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

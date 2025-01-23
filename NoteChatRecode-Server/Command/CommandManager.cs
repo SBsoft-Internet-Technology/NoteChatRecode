@@ -16,6 +16,7 @@ namespace NoteChatRecode_Server.Command
             RegisterCommand(new HelpCommand());
             RegisterCommand(new AddUserCommand());
             RegisterCommand(new UserListCommand());
+            RegisterCommand(new KickCommand());
         }
 
         public void RegisterCommand(Command command)

@@ -76,6 +76,12 @@ namespace NoteChatRecode_Client_Common.Websocket
                         servertime = handshakePacket.ServerTime.ToString();
 
                     }
+                    if (packetId == 9) {
+                    
+                        Debug.WriteLine("kick");
+                        await CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed by the WebSocket", cancellationToken);
+
+                    }
                 }
             }
         }
