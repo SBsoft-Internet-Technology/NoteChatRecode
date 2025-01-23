@@ -7,12 +7,13 @@ namespace NoteChatRecode_Server
     {
         private static readonly object _lock = new object();
         private static string _logFilePath = "server.log";
-
+        public static bool EnableDebug = true;
         public enum LogLevel
         {
             Info,
             Warning,
-            Error
+            Error,
+            Debug
         }
 
         public static void Log(LogLevel level, string message)
@@ -35,6 +36,13 @@ namespace NoteChatRecode_Server
         public static void Error(string message)
         {
             Log(LogLevel.Error, message);
+        }
+        public static void Debug(string message)
+        {
+            if (EnableDebug)
+            {
+                Log(LogLevel.Debug, message);
+            }
         }
 
         private static void WriteToFile(string message)

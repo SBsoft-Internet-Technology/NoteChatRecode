@@ -13,6 +13,7 @@ namespace NoteChatRecode_Common.Core.User
         public string Username;
         public string Password;
         public string Email;
+       
         public User(string username,string password,string email) { 
             this.ID = new Random().Next(1,114514);
             this.Username = username;

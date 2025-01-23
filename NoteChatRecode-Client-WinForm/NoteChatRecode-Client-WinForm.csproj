@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NoteChatRecode-Client-Common\NoteChatRecode-Client-Common.csproj" />
+    <ProjectReference Include="..\NoteChatRecode-Common\NoteChatRecode-Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="MaterialSkin">
       <HintPath>D:\下载\MaterialSkin.dll</HintPath>
     </Reference>

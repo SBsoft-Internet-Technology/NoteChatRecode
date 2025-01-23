@@ -1,5 +1,7 @@
-﻿using NoteChatRecode_Common;
+﻿// Event.cs
+using NoteChatRecode_Common;
 using NoteChatRecode_Common.Core.User;
+using NoteChatRecode_Server.Core.Client;
 
 namespace NoteChatRecode_Server.Event
 {
@@ -16,15 +18,15 @@ namespace NoteChatRecode_Server.Event
         public event ClientPacketEventHandler ClientPacketEvent;
 
         // 触发 ClientConnectEvent
-        public void OnUserConnect(User user)
+        public void OnUserConnect(User user, Client client)
         {
-            ClientConnectEvent?.Invoke(this, new ClientConnectEventArgs(user));
+            ClientConnectEvent?.Invoke(this, new ClientConnectEventArgs(user, client));
         }
 
         // 触发 ClientDisconnectEvent
-        public void OnUserDisconnect(User user)
+        public void OnUserDisconnect(User user, Client client)
         {
-            ClientDisconnectEvent?.Invoke(this, new ClientDisconnectEventArgs(user));
+            ClientDisconnectEvent?.Invoke(this, new ClientDisconnectEventArgs(user, client));
         }
 
         // 触发 ClientPacketEvent
@@ -38,10 +40,12 @@ namespace NoteChatRecode_Server.Event
     public class ClientConnectEventArgs : EventArgs
     {
         public User User { get; }
+        public Client Client { get; }
 
-        public ClientConnectEventArgs(User user)
+        public ClientConnectEventArgs(User user, Client client)
         {
             User = user;
+            Client = client;
         }
     }
 
@@ -49,10 +53,12 @@ namespace NoteChatRecode_Server.Event
     public class ClientDisconnectEventArgs : EventArgs
     {
         public User User { get; }
+        public Client Client { get; }
 
-        public ClientDisconnectEventArgs(User user)
+        public ClientDisconnectEventArgs(User user, Client client)
         {
             User = user;
+            Client = client;
         }
     }
 

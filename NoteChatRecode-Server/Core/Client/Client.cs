@@ -10,6 +10,7 @@ namespace NoteChatRecode_Server.Core.Client
     public class Client
     {
         public Websocket.WebSocket socket;
+        public bool handshanked = false;
         public NoteChatRecode_Common.Core.User.User User;
         public string IP;
         public Client(string ip)

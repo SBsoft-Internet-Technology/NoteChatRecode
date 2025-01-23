@@ -4,6 +4,8 @@ using System;
 using System.Threading.Tasks;
 using System.Net.WebSockets;
 using NoteChatRecode_Common;
+using System.Diagnostics;
+using System.Text;
 
 namespace NoteChatRecode_Server.Websocket
 {
@@ -32,6 +34,7 @@ namespace NoteChatRecode_Server.Websocket
 
         public async Task SendPacketAsync(DataPacket packet)
         {
+            packet.WriteData();
             await _webSocket.SendAsync(new ArraySegment<byte>(packet.Data), System.Net.WebSockets.WebSocketMessageType.Binary, true, CancellationToken.None);
         }
 
@@ -42,6 +45,7 @@ namespace NoteChatRecode_Server.Websocket
 
         public async Task CloseAsync(System.Net.WebSockets.WebSocketCloseStatus closeStatus, string statusDescription, CancellationToken cancellationToken)
         {
+            Logger.Debug("Client disconnected.");
             await _webSocket.CloseAsync(closeStatus, statusDescription, cancellationToken);
             OnDisconnected?.Invoke(this, EventArgs.Empty); // 触发断开连接事件
         }
@@ -49,21 +53,24 @@ namespace NoteChatRecode_Server.Websocket
         public async Task HandleConnectionAsync(CancellationToken cancellationToken)
         {
             OnConnected?.Invoke(this, EventArgs.Empty); // 触发连接事件
-
+            Logger.Debug("Client connected.");
             var buffer = new byte[1024 * 4];
             while (_webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
             {
                 var result = await ReceiveAsync(buffer, cancellationToken);
+                var filteredBuffer = buffer.Take(result.Count).Where(b => b != 0).ToArray();
+                
                 if (result.MessageType == WebSocketMessageType.Close)
                 {
                     await CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed by the WebSocket", cancellationToken);
                 }
                 else
                 {
-                    var data = new byte[result.Count];
-                    Array.Copy(buffer, data, result.Count);
+                    var data = new byte[filteredBuffer.Length];
+                    Array.Copy(filteredBuffer, data, filteredBuffer.Length);
                     OnPacketReceived?.Invoke(this, new DataPacketEventArgs(data)); // 触发接收数据包事件
                 }
+            
             }
         }
     }

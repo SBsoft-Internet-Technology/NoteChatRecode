@@ -17,9 +17,18 @@ namespace NoteChatRecode_Server.Core.Client
         {
             Clients.Add(client);
         }
+        public Client GetClient(string username)
+        {
+            return Clients.Find(client => client.User.Username == username);
+        }
         public void RemoveClient(Client client)
         {
-            Clients.Remove(client);
+            if (Clients.Count == 0) return;
+            if (Clients.Contains(client))
+            {
+                
+                Clients.Remove(client);
+            }
         }
-    }
+        }
 }

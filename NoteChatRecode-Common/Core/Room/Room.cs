@@ -11,12 +11,14 @@ namespace NoteChatRecode_Common.Core.Room
         public string Name;
         public string Description;
         public string Password;
+        public RoomType Type;
         public List<User.User> Users;
-        public Room(string name,string de,string password = "") {
+        public Room(string name,string de,RoomType type,string password = "") {
             this.Name = name;
             this.Description = de;
             this.Password = password;
             this.Users = new List<User.User>();
+            this.Type = type;
 
         }
         public void AddUser(User.User user)
@@ -24,5 +26,10 @@ namespace NoteChatRecode_Common.Core.Room
             Users.Add(user);
         }
 
+    }
+    public enum RoomType
+    {
+        Public,
+        Private
     }
 }

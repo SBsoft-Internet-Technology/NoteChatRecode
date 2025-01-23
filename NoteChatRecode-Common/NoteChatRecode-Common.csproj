@@ -8,17 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Datapacket\Datapackets\S02ImageMessagePacket.cs" />
-    <Compile Remove="Datapacket\Datapackets\S03RichMessagePacket.cs" />
-    <Compile Remove="Datapacket\Datapackets\S04FileMessagePacket.cs" />
-    <Compile Remove="Datapacket\Datapackets\S05VeryNBTextMessage.cs" />
+    <Compile Remove="Datapacket\Datapackets\P02ImageMessagePacket.cs" />
+    <Compile Remove="Datapacket\Datapackets\P03RichMessagePacket.cs" />
+    <Compile Remove="Datapacket\Datapackets\P04FileMessagePacket.cs" />
+    <Compile Remove="Datapacket\Datapackets\P05VeryNBTextMessage.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Datapacket\Datapackets\S02ImageMessagePacket.cs" />
-    <None Include="Datapacket\Datapackets\S03RichMessagePacket.cs" />
-    <None Include="Datapacket\Datapackets\S04FileMessagePacket.cs" />
-    <None Include="Datapacket\Datapackets\S05VeryNBTextMessage.cs" />
+    <None Include="Datapacket\Datapackets\P02ImageMessagePacket.cs" />
+    <None Include="Datapacket\Datapackets\P03RichMessagePacket.cs" />
+    <None Include="Datapacket\Datapackets\P04FileMessagePacket.cs" />
+    <None Include="Datapacket\Datapackets\P05VeryNBTextMessage.cs" />
   </ItemGroup>
 
 </Project>

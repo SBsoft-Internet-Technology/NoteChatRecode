@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace NoteChatRecode_Common.Room
 {
-    internal class RoomService
+    public class RoomService
     {
+
     }
 }

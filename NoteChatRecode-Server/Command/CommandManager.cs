@@ -14,6 +14,8 @@ namespace NoteChatRecode_Server.Command
         {
             _commands = new Dictionary<string, Command>(StringComparer.OrdinalIgnoreCase);
             RegisterCommand(new HelpCommand());
+            RegisterCommand(new AddUserCommand());
+            RegisterCommand(new UserListCommand());
         }
 
         public void RegisterCommand(Command command)

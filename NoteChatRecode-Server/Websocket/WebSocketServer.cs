@@ -10,6 +10,7 @@ using NoteChatRecode_Common.Core.User;
 using NoteChatRecode_Common.Websocket.Datapacket.Datapackets;
 using NoteChatRecode_Common.DataPack.Datapackets;
 using NoteChatRecode_Server.Core.Client;
+using NoteChatRecode_Common.Datapacket.Datapackets;
 
 namespace NoteChatRecode_Server.Websocket
 {
@@ -17,20 +18,21 @@ namespace NoteChatRecode_Server.Websocket
     {
         private readonly HttpListener _httpListener;
         private readonly DataPacketManager _dataPacketManager;
-        private readonly Event.Event _eventManager;
 
+        private UserService userService;
         public WebSocketServer(string uriPrefix)
         {
             _httpListener = new HttpListener();
             _httpListener.Prefixes.Add(uriPrefix);
             _dataPacketManager = new DataPacketManager();
-            _eventManager = new Event.Event();
+
+            userService = new UserService();
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             _httpListener.Start();
-            Console.WriteLine("WebSocket server started.");
+            Logger.Debug("WebSocket server started.");
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -43,43 +45,62 @@ namespace NoteChatRecode_Server.Websocket
                     User user = null;
                     string clientIp = httpContext.Request.RemoteEndPoint?.Address.ToString();
                     Client client = new Client(clientIp);
+                    client.socket = webSocket;
                     // 订阅事件
                     webSocket.OnConnected += (sender, e) =>
                     {
-                        /*var loginPacket = e as S00LoginRequestPacket;
-                        if (loginPacket != null)
-                        {
-                            user = new User(loginPacket.Username, loginPacket.Password, null)
-                            
-                            _eventManager.OnUserConnect(user);
-                        }*/
-
+                        /*NoteChatServer.INSTANCE.EventManager.OnUserConnect(user, client);*/
                     };
 
                     webSocket.OnDisconnected += (sender, e) =>
                     {
                         if (user != null)
                         {
-                            _eventManager.OnUserDisconnect(user);
+                            NoteChatServer.INSTANCE.EventManager.OnUserDisconnect(user, client);
                         }
+                        NoteChatServer.INSTANCE.clientManager.RemoveClient(client); 
                     };
 
-                    webSocket.OnPacketReceived += (sender, e) =>
+                    webSocket.OnPacketReceived += async (sender, e) =>
                     {
-                        int packetId = e.Data[0]; // 假设第一个字节是数据包ID
+                        int packetId = e.Data[0];
                         if (_dataPacketManager.TryGetPacket(packetId, out var packet))
                         {
+                            Logger.Debug("Received " + packet.ToString());
                             packet.Data = e.Data;
                             packet.ReadData();
-                            if (packet is S00LoginRequestPacket loginPacket)
+                            if (packet is P99HandShakePacket handshakePacket)
                             {
-                                user = new User(loginPacket.Username, loginPacket.Password, null);
+                                if (!client.handshanked)
+                                {
+                                    Logger.Info("Handshake received from " + client.IP + ". Client time is " + handshakePacket.ClientTime);
+                                    handshakePacket.ServerTime = DateTime.Now;
+                                    handshakePacket.WriteData();
+                                    await webSocket.SendPacketAsync(handshakePacket);
+                                    client.handshanked = true;
+                                    NoteChatServer.INSTANCE.clientManager.AddClient(client);
+                                }
+
+                            }
+                            else if (packet is C08LoginRequestPacket loginPacket && client.handshanked)
+                            {
+                                if(client.User == null)
+                                {
+                                    user = new User(loginPacket.Username, loginPacket.Password, null);
+                                    client.User = user;
+                                    NoteChatServer.INSTANCE.EventManager.OnUserConnect(user, client);
+                                }
+                            }
+                            else if (packet is C114PingPacket pingPacket)
+                            {
+                                Logger.Info("Ping received from " + client.IP);
                                 
-                                _eventManager.OnUserConnect(user);
+                                await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Ping received", cancellationToken);
                             }
                             else
                             {
-                                _eventManager.OnUserPacket(user, packet);
+                                
+                                NoteChatServer.INSTANCE.EventManager.OnUserPacket(user, packet);
                             }
                         }
                         else

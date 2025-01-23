@@ -5,16 +5,16 @@ using System.Text.Json;
 
 namespace NoteChatRecode_Common.Datapacket.Datapackets
 {
-    public class S01TextMessagePacket : DataPacket
+    public class P01TextMessagePacket : DataPacket
     {
         public User fromUser;
         public User toUser;
         private TextMessage textMessage;
         public override int id { get; } = 0x01;
 
-        public S01TextMessagePacket() { }
+        public P01TextMessagePacket() { }
 
-        public S01TextMessagePacket(User fromUser, User toUser, TextMessage textMessage)
+        public P01TextMessagePacket(User fromUser, User toUser, TextMessage textMessage)
         {
             this.fromUser = fromUser;
             this.toUser = toUser;

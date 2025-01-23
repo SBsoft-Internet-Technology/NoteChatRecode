@@ -1,4 +1,5 @@
 ﻿using NoteChatRecode_Server.Command;
+using NoteChatRecode_Server.Core.Client;
 using NoteChatRecode_Server.Core.Room;
 using NoteChatRecode_Server.Core.User;
 using NoteChatRecode_Server.Websocket;
@@ -22,8 +23,12 @@ namespace NoteChatRecode_Server
         public RoomManager roomManager;
         public UserManager userManager;
         public CommandManager commandManager;
+        public ClientManager clientManager;
         public WebSocketServer server;
+        public Event.Event EventManager;
         public NoteChatServer(string serverName,string serverIP,string serverPort) {
+            INSTANCE = this;
+            this.EventManager = new Event.Event();
             this.serverName = serverName;
             this.serverIP = serverIP;
             this.serverPort = serverPort;
@@ -31,9 +36,10 @@ namespace NoteChatRecode_Server
             this.serverDescription = "A NoteChat Server base on NoteChat Server " + VERSION;
             this.userManager = new UserManager();
             this.roomManager = new RoomManager();
+            this.clientManager = new ClientManager();
             commandManager = new CommandManager();
             server = new WebSocketServer($"http://{serverIP}:{serverPort}/");
-            INSTANCE = this;
+            
 
         }
     }

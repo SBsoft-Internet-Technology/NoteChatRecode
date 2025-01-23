@@ -7,13 +7,13 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NoteChatRecode_Common.DataPack.Datapackets
 {
-    public class S00LoginRequestPacket : DataPacket
+    public class C08LoginRequestPacket : DataPacket
     {
-        public override int id { get; } = 0x00;
+        public override int id { get; } = 8;
         public string Username;
         public string Password;
-        public S00LoginRequestPacket() { }
-        public S00LoginRequestPacket(string username, string password) { this.Username = username; this.Password = password; }
+        public C08LoginRequestPacket() { }
+        public C08LoginRequestPacket(string username, string password) { this.Username = username; this.Password = password; }
 
         public override void WriteData()
         {
@@ -41,7 +41,7 @@ namespace NoteChatRecode_Common.DataPack.Datapackets
             }
             string json = Encoding.UTF8.GetString(Data, 1, Data.Length - 1);
             Username = json.Split(',')[0].Split(':')[1].Replace("\"", "");
-            Password = json.Split(',')[1].Split(':')[1].Replace("\"", "");
+            Password = json.Split(',')[1].Split(':')[1].Replace("\"", "").Replace("}","");
         }
         
 

@@ -17,8 +17,11 @@ namespace NoteChatRecode_Common.Websocket.Datapacket.Datapackets
 
         private void RegisterPackets()
         {
-            RegisterPacket<S00LoginRequestPacket>();
-            RegisterPacket<S01TextMessagePacket>();
+            RegisterPacket<S07LoginResponsePacket>();
+            RegisterPacket<C08LoginRequestPacket>();
+            RegisterPacket<P01TextMessagePacket>();
+            RegisterPacket<P99HandShakePacket>();
+            RegisterPacket<C114PingPacket>();
             /*RegisterPacket<S02ImageMessagePacket>();
             RegisterPacket<S03RichMessagePacket>();
             RegisterPacket<S04FileMessagePacket>();*/
