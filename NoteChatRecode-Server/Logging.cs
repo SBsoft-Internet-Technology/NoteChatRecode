@@ -41,7 +41,7 @@ namespace NoteChatRecode_Server
         {
             lock (_lock)
             {
-                File.AppendAllText(_logFilePath, message + Environment.NewLine);
+                    File.AppendAllText(_logFilePath, message + Environment.NewLine);
             }
         }
     }

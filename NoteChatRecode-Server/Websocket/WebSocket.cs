@@ -3,6 +3,7 @@ using System.Threading;
 using System;
 using System.Threading.Tasks;
 using System.Net.WebSockets;
+using NoteChatRecode_Common;
 
 namespace NoteChatRecode_Server.Websocket
 {

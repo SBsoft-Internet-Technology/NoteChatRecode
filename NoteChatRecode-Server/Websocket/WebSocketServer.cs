@@ -7,6 +7,9 @@ using NoteChatRecode_Server.Core.User;
 using NoteChatRecode_Server.Websocket.Datapacket.Datapackets;
 using System.Net;
 using NoteChatRecode_Common.Core.User;
+using NoteChatRecode_Common.Websocket.Datapacket.Datapackets;
+using NoteChatRecode_Common.DataPack.Datapackets;
+using NoteChatRecode_Server.Core.Client;
 
 namespace NoteChatRecode_Server.Websocket
 {
@@ -27,7 +30,7 @@ namespace NoteChatRecode_Server.Websocket
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             _httpListener.Start();
-            Logger.Info("WebSocket server started.");
+            Console.WriteLine("WebSocket server started.");
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -35,24 +38,49 @@ namespace NoteChatRecode_Server.Websocket
                 if (httpContext.Request.IsWebSocketRequest)
                 {
                     var webSocketContext = await httpContext.AcceptWebSocketAsync(null);
-                    
+
                     var webSocket = new WebSocket(webSocketContext.WebSocket);
-                    User user;
+                    User user = null;
+                    string clientIp = httpContext.Request.RemoteEndPoint?.Address.ToString();
+                    Client client = new Client(clientIp);
                     // 订阅事件
-                    /*webSocket.OnConnected += (sender, e) => _eventManager.OnUserConnect(user);
-                    webSocket.OnDisconnected += (sender, e) => _eventManager.OnUserDisconnect(user);*/
+                    webSocket.OnConnected += (sender, e) =>
+                    {
+                        /*var loginPacket = e as S00LoginRequestPacket;
+                        if (loginPacket != null)
+                        {
+                            user = new User(loginPacket.Username, loginPacket.Password, null)
+                            
+                            _eventManager.OnUserConnect(user);
+                        }*/
+
+                    };
+
+                    webSocket.OnDisconnected += (sender, e) =>
+                    {
+                        if (user != null)
+                        {
+                            _eventManager.OnUserDisconnect(user);
+                        }
+                    };
+
                     webSocket.OnPacketReceived += (sender, e) =>
                     {
                         int packetId = e.Data[0]; // 假设第一个字节是数据包ID
-                        if(packetId.Equals(0x00))
-                        {
-                            
-                        }
                         if (_dataPacketManager.TryGetPacket(packetId, out var packet))
                         {
                             packet.Data = e.Data;
                             packet.ReadData();
-                            /*_eventManager.OnUserPacket(user, packet);*/
+                            if (packet is S00LoginRequestPacket loginPacket)
+                            {
+                                user = new User(loginPacket.Username, loginPacket.Password, null);
+                                
+                                _eventManager.OnUserConnect(user);
+                            }
+                            else
+                            {
+                                _eventManager.OnUserPacket(user, packet);
+                            }
                         }
                         else
                         {

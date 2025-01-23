@@ -12,6 +12,6 @@ namespace NoteChatRecode_Common
         public abstract int id { get; }
         public abstract void WriteData();
         public abstract void ReadData();
-
+        
     }
 }

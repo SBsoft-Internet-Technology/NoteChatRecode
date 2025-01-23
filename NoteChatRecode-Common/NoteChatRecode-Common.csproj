@@ -7,4 +7,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Datapacket\Datapackets\S02ImageMessagePacket.cs" />
+    <Compile Remove="Datapacket\Datapackets\S03RichMessagePacket.cs" />
+    <Compile Remove="Datapacket\Datapackets\S04FileMessagePacket.cs" />
+    <Compile Remove="Datapacket\Datapackets\S05VeryNBTextMessage.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Datapacket\Datapackets\S02ImageMessagePacket.cs" />
+    <None Include="Datapacket\Datapackets\S03RichMessagePacket.cs" />
+    <None Include="Datapacket\Datapackets\S04FileMessagePacket.cs" />
+    <None Include="Datapacket\Datapackets\S05VeryNBTextMessage.cs" />
+  </ItemGroup>
+
 </Project>

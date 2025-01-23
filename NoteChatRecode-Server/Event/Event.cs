@@ -1,62 +1,68 @@
-﻿using System;
+﻿using NoteChatRecode_Common;
 using NoteChatRecode_Common.Core.User;
-
-using NoteChatRecode_Server.Websocket.Datapacket;
-
 
 namespace NoteChatRecode_Server.Event
 {
     public class Event
     {
-        // 用户连接事件委托
-        public delegate void UserConnectEventHandler(object sender, UserEventArgs e);
-        public event UserConnectEventHandler UserConnectEvent;
+        // 定义事件委托
+        public delegate void ClientConnectEventHandler(object sender, ClientConnectEventArgs e);
+        public delegate void ClientDisconnectEventHandler(object sender, ClientDisconnectEventArgs e);
+        public delegate void ClientPacketEventHandler(object sender, ClientPacketEventArgs e);
 
-        // 用户断开连接事件委托
-        public delegate void UserDisconnectEventHandler(object sender, UserEventArgs e);
-        public event UserDisconnectEventHandler UserDisconnectEvent;
+        // 定义事件
+        public event ClientConnectEventHandler ClientConnectEvent;
+        public event ClientDisconnectEventHandler ClientDisconnectEvent;
+        public event ClientPacketEventHandler ClientPacketEvent;
 
-        // 用户数据包事件委托
-        public delegate void UserPacketEventHandler(object sender, UserPacketEventArgs e);
-        public event UserPacketEventHandler UserPacketEvent;
-
-        // 触发用户连接事件
+        // 触发 ClientConnectEvent
         public void OnUserConnect(User user)
         {
-            UserConnectEvent?.Invoke(this, new UserEventArgs(user));
+            ClientConnectEvent?.Invoke(this, new ClientConnectEventArgs(user));
         }
 
-        // 触发用户断开连接事件
+        // 触发 ClientDisconnectEvent
         public void OnUserDisconnect(User user)
         {
-            UserDisconnectEvent?.Invoke(this, new UserEventArgs(user));
+            ClientDisconnectEvent?.Invoke(this, new ClientDisconnectEventArgs(user));
         }
 
-        // 触发用户数据包事件
+        // 触发 ClientPacketEvent
         public void OnUserPacket(User user, DataPacket packet)
         {
-            UserPacketEvent?.Invoke(this, new UserPacketEventArgs(user, packet));
+            ClientPacketEvent?.Invoke(this, new ClientPacketEventArgs(user, packet));
         }
     }
 
-    // 用户事件参数类
-    public class UserEventArgs : EventArgs
+    // ClientConnectEventArgs 类
+    public class ClientConnectEventArgs : EventArgs
     {
         public User User { get; }
 
-        public UserEventArgs(User user)
+        public ClientConnectEventArgs(User user)
         {
             User = user;
         }
     }
 
-    // 用户数据包事件参数类
-    public class UserPacketEventArgs : EventArgs
+    // ClientDisconnectEventArgs 类
+    public class ClientDisconnectEventArgs : EventArgs
+    {
+        public User User { get; }
+
+        public ClientDisconnectEventArgs(User user)
+        {
+            User = user;
+        }
+    }
+
+    // ClientPacketEventArgs 类
+    public class ClientPacketEventArgs : EventArgs
     {
         public User User { get; }
         public DataPacket Packet { get; }
 
-        public UserPacketEventArgs(User user, DataPacket packet)
+        public ClientPacketEventArgs(User user, DataPacket packet)
         {
             User = user;
             Packet = packet;

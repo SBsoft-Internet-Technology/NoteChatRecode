@@ -12,6 +12,8 @@ namespace NoteChatRecode_Common.Datapacket.Datapackets
         private TextMessage textMessage;
         public override int id { get; } = 0x01;
 
+        public S01TextMessagePacket() { }
+
         public S01TextMessagePacket(User fromUser, User toUser, TextMessage textMessage)
         {
             this.fromUser = fromUser;
@@ -21,12 +23,17 @@ namespace NoteChatRecode_Common.Datapacket.Datapackets
 
         public override void WriteData()
         {
-            string fromUserJson = fromUser.GetJsonString();
-            string toUserJson = toUser.GetJsonString();
-            string textMessageJson = textMessage.GetStringJson();
+            var packetData = new
+            {
+                fromUser = fromUser.GetJsonString(),
+                toUser = toUser.GetJsonString(),
+                textMessage = textMessage.GetStringJson()
+            };
+
+            string jsonString = JsonSerializer.Serialize(packetData);
 
             // 计算总长度
-            int totalLength = 1 + Encoding.UTF8.GetByteCount(fromUserJson) + Encoding.UTF8.GetByteCount(toUserJson) + Encoding.UTF8.GetByteCount(textMessageJson);
+            int totalLength = 1 + Encoding.UTF8.GetByteCount(jsonString);
 
             // 创建数据数组
             Data = new byte[totalLength];
@@ -34,17 +41,9 @@ namespace NoteChatRecode_Common.Datapacket.Datapackets
             // 设置数据包 ID
             Data[0] = (byte)id;
 
-            // 将 fromUserJson 写入数据数组
-            byte[] fromUserBytes = Encoding.UTF8.GetBytes(fromUserJson);
-            Array.Copy(fromUserBytes, 0, Data, 1, fromUserBytes.Length);
-
-            // 将 toUserJson 写入数据数组
-            byte[] toUserBytes = Encoding.UTF8.GetBytes(toUserJson);
-            Array.Copy(toUserBytes, 0, Data, 1 + fromUserBytes.Length, toUserBytes.Length);
-
-            // 将 textMessageJson 写入数据数组
-            byte[] textMessageBytes = Encoding.UTF8.GetBytes(textMessageJson);
-            Array.Copy(textMessageBytes, 0, Data, 1 + fromUserBytes.Length + toUserBytes.Length, textMessageBytes.Length);
+            // 将 jsonString 写入数据数组
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonString);
+            Array.Copy(jsonBytes, 0, Data, 1, jsonBytes.Length);
         }
 
         public override void ReadData()
@@ -53,25 +52,25 @@ namespace NoteChatRecode_Common.Datapacket.Datapackets
             int packetId = Data[0];
             if (packetId != id)
             {
-                throw new InvalidOperationException("Invalid packet ID");
+                return;
             }
 
-            // 解析 fromUserJson
-            int fromUserLength = Array.IndexOf(Data, (byte)0, 1) - 1;
-            string fromUserJson = Encoding.UTF8.GetString(Data, 1, fromUserLength);
-            fromUser = JsonSerializer.Deserialize<User>(fromUserJson);
+            // 解析 JSON 数据
+            string jsonString = Encoding.UTF8.GetString(Data, 1, Data.Length - 1);
+            var packetData = JsonSerializer.Deserialize<PacketData>(jsonString);
 
-            // 解析 toUserJson
-            int toUserStartIndex = 1 + fromUserLength + 1;
-            int toUserLength = Array.IndexOf(Data, (byte)0, toUserStartIndex) - toUserStartIndex;
-            string toUserJson = Encoding.UTF8.GetString(Data, toUserStartIndex, toUserLength);
-            toUser = JsonSerializer.Deserialize<User>(toUserJson);
+            fromUser = JsonSerializer.Deserialize<User>(packetData.fromUser);
+            toUser = JsonSerializer.Deserialize<User>(packetData.toUser);
+            textMessage = JsonSerializer.Deserialize<TextMessage>(packetData.textMessage);
+        }
 
-            // 解析 textMessageJson
-            int textMessageStartIndex = toUserStartIndex + toUserLength + 1;
-            int textMessageLength = Data.Length - textMessageStartIndex;
-            string textMessageJson = Encoding.UTF8.GetString(Data, textMessageStartIndex, textMessageLength);
-            textMessage = JsonSerializer.Deserialize<TextMessage>(textMessageJson);
+        
+
+        private class PacketData
+        {
+            public string fromUser { get; set; }
+            public string toUser { get; set; }
+            public string textMessage { get; set; }
         }
     }
 }

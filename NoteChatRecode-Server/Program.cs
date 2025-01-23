@@ -1,7 +1,9 @@
 ﻿using NoteChatRecode_Common.DataPack.Datapackets;
 using NoteChatRecode_Server;
 using NoteChatRecode_Server.Websocket;
+using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 public class Program
@@ -21,9 +23,32 @@ public class Program
         Console.ResetColor();
         Logger.Warning("This is a development build and is not intended for production use.");
         Logger.Info("Starting server...");
-        WebSocketServer server = new WebSocketServer("http://localhost:8080/");
-        await server.StartAsync(CancellationToken.None);
 
+        // 初始化服务器
+        NoteChatServer noteChatServer = new NoteChatServer("ExampleServer", "localhost", "8080");
+        StartCommandInput(noteChatServer);
+        await noteChatServer.server.StartAsync(CancellationToken.None);
+
+        // 初始化命令输入系统
         
+    }
+
+    private static void StartCommandInput(NoteChatServer server)
+    {
+        // 在新线程中运行命令输入循环，避免阻塞主线程
+        Task.Run(async () =>
+        {
+            while (true)
+            {
+                Console.Write("> "); // 命令提示符
+                string input = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(input))
+                    continue;
+
+                // 处理命令输入
+                await server.commandManager.ExecuteCommandAsync(input);
+            }
+        });
     }
 }
