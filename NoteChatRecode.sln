@@ -3,11 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Client", "NoteChatRecode-Client\NoteChatRecode-Client.csproj", "{4FD0927F-394D-402F-895B-78621BFA5E5B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Server", "NoteChatRecode-Server\NoteChatRecode-Server.csproj", "{EE554E01-CD2D-4CD7-B08C-58D81BB50BEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Common", "NoteChatRecode-Common\NoteChatRecode-Common.csproj", "{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Client", "NoteChatRecode-Client\NoteChatRecode-Client.csproj", "{DCABE3BC-2970-403B-8FCB-A6497A122F61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteChatRecode-Client-WinForm", "NoteChatRecode-Client-WinForm\NoteChatRecode-Client-WinForm.csproj", "{40A5890D-A5B6-4D99-B95A-7D714A1B408E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{7668A686-09D3-4332-92FC-9AC294B2ACF4}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4FD0927F-394D-402F-895B-78621BFA5E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FD0927F-394D-402F-895B-78621BFA5E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FD0927F-394D-402F-895B-78621BFA5E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FD0927F-394D-402F-895B-78621BFA5E5B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE554E01-CD2D-4CD7-B08C-58D81BB50BEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE554E01-CD2D-4CD7-B08C-58D81BB50BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE554E01-CD2D-4CD7-B08C-58D81BB50BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +30,16 @@ Global
 		{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E268B3-B9B6-4A56-88A7-B0BD33453EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Debug|Any CPU.Build.0 = Debug|x64
+		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Release|Any CPU.ActiveCfg = Release|x64
+		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Release|Any CPU.Build.0 = Release|x64
+		{DCABE3BC-2970-403B-8FCB-A6497A122F61}.Release|Any CPU.Deploy.0 = Release|x64
+		{40A5890D-A5B6-4D99-B95A-7D714A1B408E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A5890D-A5B6-4D99-B95A-7D714A1B408E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A5890D-A5B6-4D99-B95A-7D714A1B408E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A5890D-A5B6-4D99-B95A-7D714A1B408E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

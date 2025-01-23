@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NoteChatRecode-Client (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "NoteChatRecode-Client (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
